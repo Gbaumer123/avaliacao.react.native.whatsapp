@@ -47,7 +47,7 @@ function Cadastro() {
   return (
     <View style={styles.container}>
 
-      <Image source={require('../../assets/mozi_eu.jpg')} style={styles.image} />
+      <Image source={require('../../assets/logo.jpg')} style={styles.image} />
       <Text style={styles.text_acesso}> Cadastre-se </Text>
       <Text style={styles.text_info}>Insira seu e-mail e senha para as informações obrigatórias de cadastro</Text>
 

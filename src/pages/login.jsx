@@ -30,7 +30,7 @@ function Login() {
   return (
     <View style={styles.container}>
 
-      <Image source={require('../../assets/mozi_eu.jpg')} style={styles.image} />
+      <Image source={require('../../assets/logo.jpg')} style={styles.image} />
       <Text style={styles.text_acesso}> Acesso ao Chat </Text>
       <Text style={styles.text_info}>Use seu e-mail e senha cadastrados para acessar o painel de conversas</Text>
       <TextInput style={styles.input} placeholder='E-mail' placeholderTextColor={'#219653'} onChangeText={(text) => setEmail(text)} value={email}/>
