@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import  db  from '../../services/firebaseConf'
+import { collection, addDoc } from "firebase/firestore";
+
 
 function Cadastro() {
   const navigation = useNavigation();
@@ -8,9 +11,10 @@ function Cadastro() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [mostraSenha, SetmostraSenha] = useState('')
 
 
-  const cadastrar = () => {
+  async function cadastrar() {
 
     if (email.trim() === '' || senha.trim() === '' || confirmarSenha.trim() === '') {
       console.log("Preencha todos os campos!");
@@ -23,26 +27,37 @@ function Cadastro() {
       alert("O e-mail deve ser do IFPR");
       return;
     }
-    
+
     if (senha !== confirmarSenha) {
       console.log("As senhas devem ser iguais!");
       alert("As senhas devem ser iguais!");
       return;
     }
-  
-    
-  
+
+
+
     console.log('Email:', email);
     console.log('Senha:', senha);
     console.log('Confirmar Senha:', confirmarSenha);
-  
+
     alert("Cadastrado com sucesso!");
-  
+
     setEmail('');
     setSenha('');
     setConfirmarSenha('');
-  };
-  
+
+
+    try {
+      const docRef = await addDoc(collection(db, "usuarios"), {
+        email: email,
+        senha: senha,
+      });
+      console.log("Documento adicionado com ID:", docRef.id);
+    } catch (e) {
+      console.error("Erro ao adicionar documento:", e);
+    }
+  }
+
 
   return (
     <View style={styles.container}>
@@ -62,11 +77,14 @@ function Cadastro() {
       }}  >
         <Text style={styles.buttonText_cadastro}>Cadastrar-se</Text>
       </TouchableOpacity>
-      
-      <TouchableOpacity style={styles.button_voltar} onPress={() => navigation.navigate('Login') } >
+
+      <TouchableOpacity style={styles.button_voltar} onPress={() => navigation.navigate('Login')} >
         <Text style={styles.buttonText_cadastro}>Voltar</Text>
       </TouchableOpacity>
     </View>
+
+
+
   );
 }
 

@@ -4,6 +4,8 @@ import Cadastro from './src/pages/cadastro';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import {app} from './services/firebaseConf'
+
 const Stack = createNativeStackNavigator();
 
 function App() {

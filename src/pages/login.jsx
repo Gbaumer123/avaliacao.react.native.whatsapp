@@ -1,6 +1,8 @@
 import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import { useState } from 'react';
 import { useNavigation} from '@react-navigation/native';
+import  db  from '../../services/firebaseConf'
+import {collection, query, where } from 'firebase/firestore';
 
 function Login() {
 
@@ -9,7 +11,17 @@ function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   
-    const loginsValido = [
+    const fazerLogin = () =>{
+      const usuarios = collection(db, 'usuarios')
+      const q = query(usuarios, where("email", "==", email ))
+
+    
+      console.log(q)
+      navigation.navigate('TelaMensagem')
+    }
+  
+  
+  const loginsValido = [
       {email: 'gbaumer@ifpr.edu.br', senha: '123456'},
       {email: 'stephany@ifpr.edu.br', senha: '123456'}
       ]
@@ -25,19 +37,24 @@ function Login() {
         }
       }
 
-  
 
   return (
     <View style={styles.container}>
 
       <Image source={require('../../assets/logo.jpg')} style={styles.image} />
+
       <Text style={styles.text_acesso}> Acesso ao Chat </Text>
+
       <Text style={styles.text_info}>Use seu e-mail e senha cadastrados para acessar o painel de conversas</Text>
+
       <TextInput style={styles.input} placeholder='E-mail' placeholderTextColor={'#219653'} onChangeText={(text) => setEmail(text)} value={email}/>
+
       <TextInput style={styles.input} placeholder='Senha' placeholderTextColor={'#219653'} secureTextEntry={true} onChangeText={(text) => setSenha(text)} value={senha}/>
-      <TouchableOpacity style={styles.button_login} onPress={Autenticacao}>
+
+      <TouchableOpacity style={styles.button_login} onPress={fazerLogin}>
         <Text style={styles.buttonText_login}>Login</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.button_cadastro} onPress={() => navigation.navigate('Cadastro') }>
         <Text style={styles.buttonText_cadastro}>Cadastro</Text>
       </TouchableOpacity>
